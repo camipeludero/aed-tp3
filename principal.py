@@ -51,7 +51,7 @@ def porcentaje_promedio(v):
         ac += porcentaje_comision
 
     if n > 0:
-        pp = ac // 1000
+        pp = ac // n
     return pp
 
 
