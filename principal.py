@@ -47,11 +47,11 @@ def porcentaje_promedio(v):
 
     for r in v:
         comision = calcular_comision(r.monto_nominal, r.id_algoritmo_comision)
-        porcentaje_comision = comision * 100 // r.monto_nominal
+        porcentaje_comision = comision * 100 / r.monto_nominal
         ac += porcentaje_comision
 
     if n > 0:
-        pp = ac // n
+        pp = ac // 1000
     return pp
 
 
@@ -71,6 +71,20 @@ def mayor_descuento(v):
 
     return id_mayor, monto_final
 
+def mayor_monto_por_moneda(v):
+    montos_finales = [[None] * 5 for i in range(5)]
+
+    for r in v:
+        monto_final = calcular_monto_final_convertido(r)
+        i = int(r.codigo_moneda_origen) - 1
+        j = int(r.codigo_moneda_pago) - 1
+
+        if montos_finales[i][j] is None or monto_final > montos_finales[i][j]:
+
+            montos_finales[i][j] = monto_final
+
+    return montos_finales
+
 
 def mostrar(v):
     pp = porcentaje_promedio(v)
@@ -78,6 +92,12 @@ def mostrar(v):
     print(f"r2.1: {pp}")
     print(f"r2.2: {id_mayor}")
     print(f"r2.3: {mayor}")
+
+    monedas = ("ARS", "USD", "EUR", "GBP", "JPY")
+    montos_finales = mayor_monto_por_moneda(v)
+    for i in range(5):
+        for j in range(5):
+            print(f"Origen {monedas[i]} Destino {monedas[j]}: {montos_finales[i][j]}")
 
 def main():
 
