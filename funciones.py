@@ -185,4 +185,4 @@ def calcular_porcentaje_descuento(r):
     monto_final = calcular_monto_final(monto_base, r.id_algoritmo_impositivo)
     descuento = r.monto_nominal - monto_final
 
-    return descuento * 100 // r.monto_nominal
+    return descuento * 100 / r.monto_nominal
